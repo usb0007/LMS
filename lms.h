@@ -88,22 +88,21 @@ class user:public book
 			in.open("User.dat");
 			
  			set<int> s1;      // declaring Set s1
- 			int max_element;
- 
+ 			 
 			while(!in.eof())
 			{
-				 	string user;
-					getline(in,user);
+				 	string u1;
+					getline(in,u1);
 	
-					if(user.length() > 0)
+					if(u1.length() > 0)
 					{
 						
-						stringstream ss(user);
-						string eno, name, phone, email,pass;
+						stringstream ss(u1);
+						string u1_eno, u1_name, u1_phone, u1_email, u1_pass;
 						
-						ss>>eno>>name>>phone>>email>>pass;
+						ss>>u1_eno>>u1_name>>u1_phone>>u1_email>>u1_pass;
 				
-						int num=stoi(eno);
+						int num=stoi(u1_eno);
 						s1.insert(num);
 						   						
 						cout<<endl;
@@ -112,14 +111,14 @@ class user:public book
 			}
 			while(!in.eof())
 			{
-				string user;
-				getline(in,user);
+				string u2;
+				getline(in,u2);
 	
-				if(user.length() > 0)
+				if(u2.length() > 0)
 				{
-	   				stringstream ss(user);
-	   				string eno, name, phone, email;
-	   				ss>>eno>>name>>phone>>email;
+	   				stringstream ss(u2);
+	   				string u2_eno, u2_name, u2_phone, u2_email, u2_pass;
+	   				ss>>u2_eno>>u2_name>>u2_phone>>u2_email>>u2_pass;
 			
 	   				if(eno == key)
 					{
@@ -132,13 +131,14 @@ class user:public book
 			}
 			if(flag == 0)
 				{
-					 if (!s1.empty())
+					int max_element=0;
+					if (!s1.empty())
         				max_element = *(s1.rbegin());
         				
         				int id=max_element + 1;
         				
         				eno= to_string(id);
-					user user(eno,name, phone, email, pass, true);
+					user user1{eno,name, phone, email, pass, true};
 			
 					fstream out;
 					out.open("user_sign.dat",std::fstream::app);
@@ -157,13 +157,11 @@ class user:public book
 		void signin() //sign in for user
 		{
 			system("clear");
-			int check=-1;
 			cout<<endl<<"Enter Enrollment: ";
 			cin>>eno;
 			cout<<"Enter Password: ";
 			cin>>pass;
 			
-			int flag=0;
 			ifstream in;
 			in.open("user_sign.dat");
 			
@@ -173,19 +171,22 @@ class user:public book
 			}
 			else
 			{
+				int flag=0;
 				while(!in.eof())
 				{
-					string user;
-					getline(in,user);
+					
+					string user1;
+					getline(in,user1);
 	
-					if(user.length() > 0)
+					if(user1.length() > 0)
 					{
-						stringstream ss(user);
+						stringstream ss(user1);
 						ss>>enroll>>password;
 						
 						if(enroll==eno && password==pass)
 						{
 							flag=1;
+							int check=-1;
 							cout<<endl<<"***** Successfully logged in as User *****"<<endl;
 							while(check!=0)
 							{
@@ -235,8 +236,7 @@ class user:public book
 			ofstream out;
 			out.open("temp.dat", std::fstream::out);
 			
-			int flag = 0;
-			string key1, key2;
+			string key2;
 			
 			cout<<endl;
 			cout<<"Enter Enrollment no :-> ";
@@ -253,18 +253,20 @@ class user:public book
 			} 
 			else 
 			{
+				int flag = 0;
 				while(!in.eof())
 				{
+					
 					string issue;
 					getline(in,issue);
 	
 					if(issue.length() > 0)
 					{
 						stringstream ss(issue);
-						string eno, bid;
+						string rb_eno, bid;
 						ss>>eno>>bid;
 			
-						if(eno == enroll && bid == key2)
+						if(rb_eno == enroll && bid == key2)
 						{
 							flag = 1;
 						}
@@ -318,14 +320,14 @@ class user:public book
 					if(book.length() > 0)
 					{
 						stringstream ss(book);
-						string bid, name, author, publisher;
-						ss>>bid>>name>>author>>publisher;
+						string vab_bid, vab_name, vab_author, vab_publisher;
+						ss>>vab_bid>>vab_name>>vab_author>>vab_publisher;
 				
 						cout<<endl;
-						cout<<"Book Id :-> "<<bid<<endl;
-						cout<<"Name :-> "<<name<<endl;
-						cout<<"Author :-> "<<author<<endl;
-						cout<<"Publisher :-> "<<publisher<<endl;
+						cout<<"Book Id :-> "<<vab_bid<<endl;
+						cout<<"Name :-> "<<vab_name<<endl;
+						cout<<"Author :-> "<<vab_author<<endl;
+						cout<<"Publisher :-> "<<vab_publisher<<endl;
 					}
 				}
 			}
@@ -341,11 +343,11 @@ class user:public book
 			int flag=0;
 			viewAllBooks();
 		
-			string eno, bid;
+			string enrollno, bid;
 			
 			cout<<endl;
 			cout<<"Enter Enrollment no :-> ";
-			cout<<enroll<<endl;
+			cout<<enrollno<<endl;
 			cout<<"Enter Book Id :-> ";
 			cin>>bid;
 			
@@ -368,7 +370,7 @@ class user:public book
 							cout<<endl<<"***** Book issued Successfully *****"<<endl;							
 							ofstream out;
 							out.open("Issued_Books.dat", std::fstream::app);
-							out<<enroll<<" "<<bid<<endl;
+							out<<enrollno<<" "<<bid<<endl;
 							out.close();
 						}					
 					}						
@@ -384,7 +386,6 @@ class user:public book
 		void viewMyIssuedBooks() //view book that is issued by user 
 		{
 			system("clear");
-			int flag=0;
 			ifstream in;
 			in.open("Issued_Books.dat");
 	
@@ -394,6 +395,7 @@ class user:public book
 			}
 			else
 			{
+				int flag=0;
 				while(!in.eof())
 				{
 					string book;
@@ -402,14 +404,14 @@ class user:public book
 					if(book.length() > 0) 
 					{
 						stringstream ss(book);
-						string eno,bid;
-						ss>>eno>>bid;
+						string vmi_eno,bid;
+						ss>>vmi_eno>>bid;
 						
 						if(enroll==eno)
 						{
 							cout<<endl;
 							flag=1;
-							cout<<"Name :-> "<<eno<<endl;
+							cout<<"Name :-> "<<vmi_eno<<endl;
 							cout<<"Book Id :-> "<<bid<<endl;	
 						}
 					}
@@ -422,7 +424,6 @@ class user:public book
 
 class librarian:public user //creating librarian class and inheriting the user class 
 {
-	string name,pass; // local variables
 	public:
 		librarian(){} // Default Constructor
 
@@ -448,13 +449,11 @@ class librarian:public user //creating librarian class and inheriting the user c
 		void signin() //sign in for librarian
 		{
 			system("clear");
-			int check=-1;
 			cout<<"Enter Name: ";
 			cin>>name;
 			cout<<"Enter Password: ";
 			cin>>pass;
 			
-			int flag=0;
 			ifstream in;
 			in.open("Librarian_sign.dat");
 			
@@ -464,6 +463,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 			}
 			else
 			{
+				int flag=0;
 				while(!in.eof())
 				{
 					string user;
@@ -478,6 +478,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 						if(lname==name && password==pass)
 						{
 							flag=1;
+							int check=-1;
 							cout<<endl<<"***** Successfully logged in as Librarian. *****"<<endl;
 							while(check!=0)
 							{
@@ -577,7 +578,6 @@ class librarian:public user //creating librarian class and inheriting the user c
 		void searchUser() //search a user
 		{
 			system("clear");
-			int flag = 0;
 			string key;
 			cout<<endl;
 			cout<<"Enter Enrollment no :-> ";
@@ -592,6 +592,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 			}
 			else
 			{
+				int flag = 0;
 				while(!in.eof())
 				{
 					string user;
@@ -634,7 +635,6 @@ class librarian:public user //creating librarian class and inheriting the user c
 			ofstream out;
 			out.open("temp.dat", std::fstream::out);
 			
-			int flag = 0;
 			string key;
 			cout<<endl;
 			cout<<"Enter Enrollment no :-> ";
@@ -649,6 +649,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 			}
 			else
 			{
+				int flag = 0;
 				while(!in.eof())
 				{
 					string user;
@@ -750,7 +751,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 			ifstream in;
 			in.open("Book.dat");
 			set<int> s1; // declaring Set s1
-			int max_element;
+			
  			while(!in.eof())
 			{
 				 	string text;
@@ -760,11 +761,11 @@ class librarian:public user //creating librarian class and inheriting the user c
 					{
 						
 						stringstream ss(text);
-						string bid, name, author, publisher;
+						string ib_bid, ib_name, ib_author, ib_publisher;
 						
-						ss>>bid>>name>>author>>publisher;
+						ss>>ib_bid>>ib_name>>ib_author>>ib_publisher;
 				
-						int num=stoi(bid);
+						int num=stoi(ib_bid);
 						s1.insert(num);
 						   						
 						cout<<endl;
@@ -780,8 +781,8 @@ class librarian:public user //creating librarian class and inheriting the user c
 					if(book.length() > 0)
 					{
 						stringstream ss(book);
-						string bid, name, author, publisher;
-						ss>>bid>>name>>author>>publisher;
+						string ib1_bid, ib1_name, ib1_author, ib1_publisher;
+						ss>>ib1_bid>>ib1_name>>ib1_author>>ib1_publisher;
 			
 						if(bid == key )
 						{
@@ -795,14 +796,15 @@ class librarian:public user //creating librarian class and inheriting the user c
 				
 				if(flag == 0)
 				{
-					 if (!s1.empty())
+					int max_element=0;
+					if (!s1.empty())
         				max_element = *(s1.rbegin());
         				//cout<<"sadsadasdsadasd  "<<max_element;
         				int id=max_element + 1;
         				
         				bid= to_string(id);
 					
-					book book(bid, name, author, publisher, true);
+					book book{bid, name, author, publisher, true};
 					cout<<"Book Added Successtully..";
 					
 				}		
@@ -813,7 +815,6 @@ class librarian:public user //creating librarian class and inheriting the user c
 		void searchBook() //search a book
 		{
 			system("clear");
-			int flag = 0;
 			string key;
 			
 			
@@ -830,6 +831,7 @@ class librarian:public user //creating librarian class and inheriting the user c
 			}
 			else
 			{
+				int flag = 0;
 				while(!in.eof())
 				{
 					string book;
