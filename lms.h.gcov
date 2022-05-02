@@ -1,0 +1,870 @@
+        -:    0:Source:lms.h
+        -:    0:Graph:lms.gcno
+        -:    0:Data:lms.gcda
+        -:    0:Runs:1
+        -:    1:#ifndef LIB_H     //defining header file
+        -:    2:#define LIB_H
+        -:    3:
+        -:    4:#include<iostream>   //including libraries
+        -:    5:#include<sstream>
+        -:    6:#include<fstream>
+        -:    7:#include <set> 
+        -:    8:
+        -:    9:
+        -:   10:using namespace std;
+        -:   11:
+        -:   12:class book    //creating book class
+        -:   13:{	
+        -:   14:	string bid, name, author, publisher;
+        -:   15:	
+        -:   16:	public:
+        6:   17:		book() {}  // Default Constructer
+        1:   18:		book(string bid, string name,string author, string publisher,bool writeToFile) // Parameterized Constructor
+        -:   19:		
+        1:   20:		{
+        1:   21:			this->bid=bid;
+        1:   22:			this->name=name;
+        1:   23:			this->author=author;
+        1:   24:			this->publisher=publisher;
+        -:   25:			
+        1:   26:			if(writeToFile)
+        -:   27:			{
+        1:   28:				write();
+        -:   29:			}
+        1:   30:			}
+        -:   31:			
+        -:   32:			// write fucntion to write into the book.txt file.
+        1:   33:			void write() 
+        -:   34:			{
+        2:   35:				ofstream out;
+        1:   36:				out.open("Book.txt", std::fstream::app);
+        1:   37:				out<<bid<<" "<<name<<" "<<author<<" "<<publisher<<endl;
+        1:   38:				out.close();
+        -:   39:
+        1:   40:				}
+        -:   41:};
+        -:   42:
+        -:   43://creating user class and inheriting book class
+        -:   44:class user:public book 
+        -:   45:{
+        -:   46:	protected:
+        -:   47:		string eno,name,phone,email,pass,enroll,password;
+        -:   48:	
+        -:   49:	public:
+        5:   50:		user(){} //default  Constructor
+        1:   51:		user(string eno,string name, string phone, string email,string pass, bool writeToFile)   // Parameterized Constructor
+        1:   52:		{
+        1:   53:			this->eno = eno;
+        1:   54:			this->pass = pass;
+        1:   55:			this->name = name;
+        1:   56:			this->phone = phone;
+        1:   57:			this->email = email;
+        -:   58:			
+        1:   59:			if(writeToFile)
+        -:   60:			{
+        2:   61:				ofstream out;
+        1:   62:				out.open("User.txt", std::fstream::app);
+        1:   63:				out<<eno<<" "<<name<<" "<<phone<<" "<<email<<" "<<pass<<endl;
+        1:   64:				out.close();
+        -:   65:			}
+        1:   66:		}
+        -:   67:		
+        -:   68:		
+        -:   69:		//registration of user
+        1:   70:		void signup() 
+        -:   71:		{
+        1:   72:			system("clear");
+        -:   73:			//cout<<"Enter Enrollment :-> ";
+        -:   74:			//cin>>eno;
+        1:   75:			cout<<"Enter First Name :-> ";
+        1:   76:			cin>>name;
+        1:   77:			cout<<"Enter Password :-> ";
+        1:   78:			cin>>pass;
+        1:   79:			cout<<"Enter Contact no :-> ";
+        1:   80:			cin>>phone;
+        1:   81:			cout<<"Enter Email Id :-> ";
+        1:   82:			cin>>email;
+        -:   83:			
+        1:   84:			int flag = 0;
+        2:   85:			string key;
+        1:   86:			key=eno;
+        2:   87:			ifstream in;
+        1:   88:			in.open("User.txt");
+        -:   89:			
+        2:   90: 			set<int> s1;      // declaring Set s1
+        -:   91: 			int max_element;
+        -:   92: 
+       16:   93:			while(!in.eof())
+        -:   94:			{
+       30:   95:				 	string user;
+       15:   96:					getline(in,user);
+        -:   97:	
+       15:   98:					if(user.length() > 0)
+        -:   99:					{
+        -:  100:						
+       28:  101:						stringstream ss(user);
+       28:  102:						string eno, name, phone, email,pass;
+        -:  103:						
+       14:  104:						ss>>eno>>name>>phone>>email>>pass;
+        -:  105:				
+       14:  106:						int num=stoi(eno);
+       14:  107:						s1.insert(num);
+        -:  108:						   						
+       14:  109:						cout<<endl;
+        -:  110:						
+        -:  111:					}
+        -:  112:			}
+       1*:  113:			while(!in.eof())
+        -:  114:			{
+    #####:  115:				string user;
+    #####:  116:				getline(in,user);
+        -:  117:	
+    #####:  118:				if(user.length() > 0)
+        -:  119:				{
+    #####:  120:	   				stringstream ss(user);
+    #####:  121:	   				string eno, name, phone, email;
+    #####:  122:	   				ss>>eno>>name>>phone>>email;
+        -:  123:			
+    #####:  124:	   				if(eno == key)
+        -:  125:					{
+    #####:  126:						flag = 1;
+    #####:  127:						cout<<"User Already Exixts..";
+    #####:  128:						in.close();
+    #####:  129:						break;
+        -:  130:					}			
+        -:  131:				}
+        -:  132:			}
+        1:  133:			if(flag == 0)
+        -:  134:				{
+        1:  135:					 if (!s1.empty())
+        1:  136:        				max_element = *(s1.rbegin());
+        -:  137:        				
+        1:  138:        				int id=max_element + 1;
+        -:  139:        				
+        1:  140:        				eno= to_string(id);
+        3:  141:					user user(eno,name, phone, email, pass, true);
+        -:  142:			
+        2:  143:					fstream out;
+        1:  144:					out.open("user_sign.txt",std::fstream::app);
+        1:  145:					out<<eno<<" "<<pass<<endl;
+        1:  146:					out.close();
+        -:  147:			
+        1:  148:					cout<<endl<<"***** Successfully Created User account *****"<<endl;
+        1:  149:					cout<<"\n\n";
+        -:  150:					
+        -:  151:				}	
+        -:  152:
+        1:  153:		}
+        -:  154:		
+        -:  155:		
+        2:  156:		void signin() //sign in for user
+        -:  157:		{
+        2:  158:			system("clear");
+        2:  159:			int check=-1;
+        2:  160:			cout<<endl<<"Enter Enrollment: ";
+        2:  161:			cin>>eno;
+        2:  162:			cout<<"Enter Password: ";
+        2:  163:			cin>>pass;
+        -:  164:			
+        2:  165:			int flag=0;
+        4:  166:			ifstream in;
+        2:  167:			in.open("user_sign.txt");
+        -:  168:			
+        2:  169:			if(in.eof())
+        -:  170:			{
+    #####:  171:				cout<<endl<<"!!! Wrong Enrollment Number or Password, Try again later "<<endl;	
+        -:  172:			}
+        -:  173:			else
+        -:  174:			{
+       40:  175:				while(!in.eof())
+        -:  176:				{
+       76:  177:					string user;
+       38:  178:					getline(in,user);
+        -:  179:	
+       38:  180:					if(user.length() > 0)
+        -:  181:					{
+       72:  182:						stringstream ss(user);
+       36:  183:						ss>>enroll>>password;
+        -:  184:						
+       36:  185:						if(enroll==eno && password==pass)
+        -:  186:						{
+        1:  187:							flag=1;
+        1:  188:							cout<<endl<<"***** Successfully logged in as User *****"<<endl;
+        6:  189:							while(check!=0)
+        -:  190:							{
+        5:  191:								cout<<endl<<"Available Choices :"<<endl<<endl;
+        5:  192:								cout<<endl<<"1 - View All Books"<<endl;
+        5:  193:								cout<<"2 - Issue Book"<<endl;
+        5:  194:								cout<<"3 - Issued Books"<<endl;
+        5:  195:								cout<<"4 - Return Book"<<endl;
+        5:  196:								cout<<"0 - Logout"<<endl;
+        -:  197:								
+        5:  198:								cout<<endl<<"Enter your choice :-> ";
+        5:  199:								cin>>check;
+        -:  200:								
+        5:  201:								switch(check)
+        -:  202:								{
+        1:  203:									case 1: viewAllBooks();
+        1:  204:										break;
+        1:  205:									case 2: issueBook();
+        1:  206:										break;
+        1:  207:									case 3: viewMyIssuedBooks();
+        1:  208:										break;
+        1:  209:									case 4: returnBook();
+        1:  210:										break;
+        1:  211:									default: cout<<endl<<"User logged Out Successfully..\n"<<endl;
+        -:  212:								}
+        -:  213:							}
+        -:  214:						}
+        -:  215:					}
+        -:  216:				}
+        2:  217:				if(flag==0)
+        -:  218:				{
+        1:  219:					cout<<endl;
+        1:  220:					cout<<"!!!  User not found  !!!"<<endl<<endl;
+        -:  221:				}
+        -:  222:			}
+        2:  223:			in.close();
+        2:  224:		}
+        -:  225:		
+        -:  226:		
+        -:  227:		
+        2:  228:		void returnBook() //return a book that is issued by user 
+        -:  229:		{
+        2:  230:			system("clear");
+        2:  231:			cout<<endl<<"Your Bookshelf : "<<endl<<endl;
+        2:  232:			viewMyIssuedBooks();
+        -:  233:			
+        4:  234:			ofstream out;
+        2:  235:			out.open("temp.txt", std::fstream::out);
+        -:  236:			
+        2:  237:			int flag = 0;
+        4:  238:			string key1, key2;
+        -:  239:			
+        2:  240:			cout<<endl;
+        2:  241:			cout<<"Enter Enrollment no :-> ";
+        2:  242:			cout<<enroll<<endl;
+        2:  243:			cout<<"Enter Book Id :-> ";
+        2:  244:			cin>>key2;
+        -:  245:			
+        4:  246:			ifstream in;
+        2:  247:			in.open("Issued_Books.txt");
+        -:  248:	
+        2:  249:			if(in.eof())
+        -:  250:			{
+    #####:  251:				cout<<endl<<"!!!  No data present in the record  !!!"<<endl;	
+        -:  252:			} 
+        -:  253:			else 
+        -:  254:			{
+        8:  255:				while(!in.eof())
+        -:  256:				{
+       12:  257:					string issue;
+        6:  258:					getline(in,issue);
+        -:  259:	
+        6:  260:					if(issue.length() > 0)
+        -:  261:					{
+        8:  262:						stringstream ss(issue);
+        8:  263:						string eno, bid;
+        4:  264:						ss>>eno>>bid;
+        -:  265:			
+        4:  266:						if(eno == enroll && bid == key2)
+        -:  267:						{
+        1:  268:							flag = 1;
+        -:  269:						}
+        -:  270:						else
+        -:  271:						{
+        3:  272:							out<<enroll<<" "<<bid<<endl;
+        -:  273:						}
+        -:  274:					}
+        -:  275:				}
+        -:  276:				
+        2:  277:				if(flag == 0)
+        -:  278:				{
+        1:  279:					cout<<endl;
+        1:  280:					cout<<"!!!  No Records found  !!!"<<endl;
+        -:  281:				}
+        -:  282:				else
+        -:  283:				{
+        1:  284:					cout<<endl;
+        1:  285:					cout<<"***** Returned successfully *****"<<endl;
+        -:  286:				}
+        -:  287:			}
+        -:  288:	
+        -:  289:			
+        2:  290:			in.close();
+        2:  291:			out.close();
+        -:  292:			
+        2:  293:			remove("Issued_Books.txt");
+        2:  294:			rename("temp.txt","Issued_Books.txt");
+        2:  295:		}
+        -:  296:		
+        -:  297:		
+        -:  298:		
+        -:  299:		
+        5:  300:		void viewAllBooks() //view all books 
+        -:  301:		{
+        5:  302:			system("clear");
+       10:  303:			ifstream in;
+        5:  304:			in.open("Book.txt");
+        -:  305:	
+        5:  306:			if(in.eof())
+        -:  307:			{
+    #####:  308:				cout<<endl<<"!!!  No book present in shelf  !!!"<<endl;	
+        -:  309:			}
+        -:  310:			else
+        -:  311:			{
+       68:  312:				while(!in.eof())
+        -:  313:				{
+      126:  314:					string book;
+       63:  315:					getline(in,book);
+        -:  316:	
+       63:  317:					if(book.length() > 0)
+        -:  318:					{
+      116:  319:						stringstream ss(book);
+      116:  320:						string bid, name, author, publisher;
+       58:  321:						ss>>bid>>name>>author>>publisher;
+        -:  322:				
+       58:  323:						cout<<endl;
+       58:  324:						cout<<"Book Id :-> "<<bid<<endl;
+       58:  325:						cout<<"Name :-> "<<name<<endl;
+       58:  326:						cout<<"Author :-> "<<author<<endl;
+       58:  327:						cout<<"Publisher :-> "<<publisher<<endl;
+        -:  328:					}
+        -:  329:				}
+        -:  330:			}
+        5:  331:			in.close();
+        5:  332:		}
+        -:  333:		
+        -:  334:		
+        -:  335:		
+        -:  336:		
+        3:  337:		void issueBook() //issue a book
+        -:  338:		{	
+        3:  339:			system("clear");
+        3:  340:			int flag=0;
+        3:  341:			viewAllBooks();
+        -:  342:		
+        6:  343:			string eno, bid;
+        -:  344:			
+        3:  345:			cout<<endl;
+        3:  346:			cout<<"Enter Enrollment no :-> ";
+        3:  347:			cout<<enroll<<endl;
+        3:  348:			cout<<"Enter Book Id :-> ";
+        3:  349:			cin>>bid;
+        -:  350:			
+        6:  351:			ifstream in;
+        3:  352:			in.open("Book.txt");
+       41:  353:			while(!in.eof())
+        -:  354:			{
+       76:  355:				string book;
+       38:  356:					getline(in,book);
+        -:  357:	
+       38:  358:					if(book.length() > 0)
+        -:  359:					{
+       70:  360:						stringstream ss(book);
+       70:  361:						string b_id;
+       35:  362:						ss>>b_id;
+        -:  363:						
+       35:  364:						if(b_id==bid)
+        -:  365:						{
+        2:  366:							flag=1;
+        2:  367:							cout<<endl<<"***** Book issued Successfully *****"<<endl;							
+        4:  368:							ofstream out;
+        2:  369:							out.open("Issued_Books.txt", std::fstream::app);
+        2:  370:							out<<enroll<<" "<<bid<<endl;
+        2:  371:							out.close();
+        -:  372:						}					
+        -:  373:					}						
+        -:  374:			}	
+        3:  375:			if(flag==0)
+        1:  376:						cout<<endl<<"!!!  Requested Book is not available  !!"<<endl;
+        3:  377:			in.close();
+        3:  378:		}
+        -:  379:		
+        -:  380:		
+        -:  381:		
+        -:  382:		
+        3:  383:		void viewMyIssuedBooks() //view book that is issued by user 
+        -:  384:		{
+        3:  385:			system("clear");
+        3:  386:			int flag=0;
+        6:  387:			ifstream in;
+        3:  388:			in.open("Issued_Books.txt");
+        -:  389:	
+        3:  390:			if(in.eof())
+        -:  391:			{
+    #####:  392:				cout<<endl<<"!!!  No Issue present in the record  !!!"<<endl;	
+        -:  393:			}
+        -:  394:			else
+        -:  395:			{
+       12:  396:				while(!in.eof())
+        -:  397:				{
+       18:  398:					string book;
+        9:  399:					getline(in,book);
+        -:  400:	
+        9:  401:					if(book.length() > 0) 
+        -:  402:					{
+       12:  403:						stringstream ss(book);
+       12:  404:						string eno,bid;
+        6:  405:						ss>>eno>>bid;
+        -:  406:						
+        6:  407:						if(enroll==eno)
+        -:  408:						{
+        2:  409:							cout<<endl;
+        2:  410:							flag=1;
+        2:  411:							cout<<"Name :-> "<<eno<<endl;
+        2:  412:							cout<<"Book Id :-> "<<bid<<endl;	
+        -:  413:						}
+        -:  414:					}
+        -:  415:				}
+        3:  416:				if(flag==0)
+        1:  417:					cout<<endl<<"!!!  You have not issued any books  !!!"<<endl;
+        -:  418:			}
+        3:  419:		}
+        -:  420:};
+        -:  421:
+        -:  422:class librarian:public user //creating librarian class and inheriting the user class 
+        -:  423:{
+        -:  424:	string name,pass; // local variables
+        -:  425:	public:
+        2:  426:		librarian(){} // Default Constructor
+        -:  427:
+        3:  428:		void signup()
+        -:  429:		{
+        3:  430:			system("clear");
+        3:  431:			cout<<"Enter Name: ";
+        3:  432:			cin>>name;
+        3:  433:			cout<<"Enter Password: ";
+        3:  434:			cin>>pass;
+        -:  435:			
+        6:  436:			fstream out;
+        3:  437:			out.open("Librarian_sign.txt",std::fstream::app);
+        3:  438:			out<<name<<" "<<pass<<endl;
+        3:  439:			out.close();
+        -:  440:			
+        3:  441:			cout<<endl<<"***** Successfully created Librarian account *****"<<endl;
+        3:  442:		}
+        -:  443:		
+        -:  444:		
+        -:  445:		
+        1:  446:		void signin() //sign in for librarian
+        -:  447:		{
+        1:  448:			system("clear");
+        1:  449:			int check=-1;
+        1:  450:			cout<<"Enter Name: ";
+        1:  451:			cin>>name;
+        1:  452:			cout<<"Enter Password: ";
+        1:  453:			cin>>pass;
+        -:  454:			
+        1:  455:			int flag=0;
+        2:  456:			ifstream in;
+        1:  457:			in.open("Librarian_sign.txt");
+        -:  458:			
+        1:  459:			if(in.eof())
+        -:  460:			{
+    #####:  461:				cout<<endl<<"Wrong Username or Password, Try again later "<<endl;	
+        -:  462:			}
+        -:  463:			else
+        -:  464:			{
+       21:  465:				while(!in.eof())
+        -:  466:				{
+       40:  467:					string user;
+       20:  468:					getline(in,user);
+        -:  469:	
+       20:  470:					if(user.length() > 0)
+        -:  471:					{
+       38:  472:						stringstream ss(user);
+       38:  473:						string lname,password;
+       19:  474:						ss>>lname>>password;
+        -:  475:						
+       19:  476:						if(lname==name && password==pass)
+        -:  477:						{
+        2:  478:							flag=1;
+        2:  479:							cout<<endl<<"***** Successfully logged in as Librarian. *****"<<endl;
+       17:  480:							while(check!=0)
+        -:  481:							{
+       15:  482:								cout<<endl<<"Available Choices :"<<endl<<endl;
+       15:  483:								cout<<endl<<"1 - Create New User"<<endl;
+       15:  484:								cout<<"2 - Search User"<<endl;
+       15:  485:								cout<<"3 - View All Users"<<endl;
+       15:  486:								cout<<"4 - Insert Book"<<endl;
+       15:  487:								cout<<"5 - View All Books"<<endl;
+       15:  488:								cout<<"6 - Issue Book"<<endl;
+       15:  489:								cout<<"7 - Search Books"<<endl;
+       15:  490:								cout<<"8 - Issued Books"<<endl;
+       15:  491:								cout<<"9 - Return Book"<<endl;
+       15:  492:								cout<<"10 - Delete User"<<endl;
+       15:  493:								cout<<"0 - Logout"<<endl;
+        -:  494:								
+       15:  495:								cout<<endl<<"Enter your choice :-> ";
+       15:  496:								cin>>check;
+        -:  497:								
+       15:  498:								switch(check)
+        -:  499:								{
+        2:  500:									case 1: signup();
+        2:  501:										break;
+        2:  502:									case 2: searchUser();
+        2:  503:										break;
+        1:  504:									case 3: viewAllUsers();
+        1:  505:										break;
+        1:  506:									case 4: insertBook();
+        1:  507:										break;
+        1:  508:									case 5: viewAllBooks();
+        1:  509:										break;
+        2:  510:									case 6: issueBook();
+        2:  511:										break;
+        1:  512:									case 7: searchBook();
+        1:  513:										break;	
+        1:  514:									case 8: viewIssuedBooks();
+        1:  515:										break;
+        1:  516:									case 9: returnBook();
+        1:  517:										break;
+        2:  518:									case 10: deleteUser();
+        2:  519:										break;
+        1:  520:									default: cout<<endl<<"Librarian logged Out Successfully..\n"<<endl;
+        -:  521:								}
+        -:  522:							}
+        -:  523:						}
+        -:  524:					}	
+        -:  525:				}
+        1:  526:				if(flag==0)
+        -:  527:				{
+    #####:  528:					cout<<endl;
+    #####:  529:					cout<<"!!!  Librarian not found  !!!"<<endl<<endl;
+        -:  530:				}
+        -:  531:			}
+        1:  532:			in.close();
+        1:  533:		}
+        -:  534:		
+        -:  535:		
+        -:  536:		
+        -:  537:		
+        1:  538:		void viewAllUsers() //view all users
+        -:  539:		{
+        1:  540:			system("clear");
+        2:  541:			ifstream in;
+        1:  542:			in.open("User.txt");
+        -:  543:	
+        1:  544:			if(in.eof())
+        -:  545:			{
+    #####:  546:				cout<<endl<<"!!!  No user present in the record  !!!"<<endl;	
+        -:  547:			}
+        -:  548:			else 
+        -:  549:			{
+       17:  550:				while(!in.eof())
+        -:  551:				{
+       32:  552:					string user;
+       16:  553:					getline(in,user);
+        -:  554:	
+       16:  555:					if(user.length() > 0)
+        -:  556:					{
+       30:  557:						stringstream ss(user);
+       30:  558:						string eno, name, phone, email;
+       15:  559:						ss>>eno>>name>>phone>>email;
+       15:  560:						cout<<endl;
+       15:  561:						cout<<"Enrollment No :-> "<<eno<<endl;
+       15:  562:						cout<<"Name :-> "<<name<<endl;
+       15:  563:						cout<<"Phone No :-> "<<phone<<endl;
+       15:  564:						cout<<"Email :-> "<<email<<endl;	
+        -:  565:					}
+        -:  566:				}	
+        -:  567:			}
+        -:  568:	
+        1:  569:			in.close();
+        1:  570:		}
+        -:  571:		
+        -:  572:		
+        -:  573:		
+        -:  574:		
+        2:  575:		void searchUser() //search a user
+        -:  576:		{
+        2:  577:			system("clear");
+        2:  578:			int flag = 0;
+        4:  579:			string key;
+        2:  580:			cout<<endl;
+        2:  581:			cout<<"Enter Enrollment no :-> ";
+        2:  582:			cin>>key;
+        -:  583:			
+        4:  584:			ifstream in;
+        2:  585:			in.open("User.txt");
+        -:  586:	
+        2:  587:			if(in.eof())
+        -:  588:			{
+    #####:  589:				cout<<endl<<"!!!  No user present in the record  !!!"<<endl;	
+        -:  590:			}
+        -:  591:			else
+        -:  592:			{
+       25:  593:				while(!in.eof())
+        -:  594:				{
+       24:  595:					string user;
+       24:  596:					getline(in,user);
+        -:  597:	
+       24:  598:					if(user.length() > 0)
+        -:  599:					{
+       23:  600:						stringstream ss(user);
+       23:  601:						string eno, name, phone, email;
+       23:  602:						ss>>eno>>name>>phone>>email;
+        -:  603:			
+       23:  604:						if(eno == key)
+        -:  605:						{
+        1:  606:							flag = 1;
+        1:  607:							cout<<endl;
+        1:  608:							cout<<"Enrollment No :-> "<<eno<<endl;
+        1:  609:							cout<<"Name :-> "<<name<<endl;
+        1:  610:							cout<<"Phone No :-> "<<phone<<endl;
+        1:  611:							cout<<"Email :-> "<<email<<endl;
+        1:  612:							break;
+        -:  613:						}			
+        -:  614:					}
+        -:  615:				}
+        -:  616:				
+        2:  617:				if(flag == 0)
+        -:  618:				{
+        1:  619:					cout<<endl;
+        1:  620:					cout<<"!!!  User not found  !!!"<<endl<<endl;
+        -:  621:				}	
+        -:  622:			}
+        2:  623:			in.close();
+        2:  624:		}
+        -:  625:	
+        -:  626:	
+        -:  627:	
+        -:  628:	
+        2:  629:		void deleteUser() //delete the user
+        -:  630:		{
+        2:  631:			system("clear");
+        4:  632:			ofstream out;
+        2:  633:			out.open("temp.txt", std::fstream::out);
+        -:  634:			
+        2:  635:			int flag = 0;
+        4:  636:			string key;
+        2:  637:			cout<<endl;
+        2:  638:			cout<<"Enter Enrollment no :-> ";
+        2:  639:			cin>>key;
+        -:  640:			
+        4:  641:			ifstream in;
+        2:  642:			in.open("User.txt");
+        -:  643:	
+        2:  644:			if(in.eof())
+        -:  645:			{
+    #####:  646:				cout<<endl<<"!!!  No user present in the record  !!!"<<endl;	
+        -:  647:			}
+        -:  648:			else
+        -:  649:			{
+       34:  650:				while(!in.eof())
+        -:  651:				{
+       64:  652:					string user;
+       32:  653:					getline(in,user);
+        -:  654:	
+       32:  655:					if(user.length() > 0)
+        -:  656:					{
+       60:  657:						stringstream ss(user);
+       60:  658:						string eno, name, phone, email;
+       30:  659:						ss>>eno>>name>>phone>>email;
+        -:  660:			
+       30:  661:						if(eno == key)
+        -:  662:						{
+        1:  663:							flag = 1;
+        -:  664:						}
+        -:  665:						else
+        -:  666:						{
+       29:  667:							out<<eno<<" "<<name<<" "<<phone<<" "<<email<<endl;
+        -:  668:						}
+        -:  669:					}
+        -:  670:				}
+        -:  671:				
+        2:  672:				if(flag == 0)
+        -:  673:				{
+        1:  674:					cout<<endl;
+        1:  675:					cout<<"!!!  No user found  !!!"<<endl;
+        -:  676:				}
+        -:  677:				else
+        -:  678:				{
+        1:  679:					cout<<endl;
+        1:  680:					cout<<"***** User Deleted Successfully *****"<<endl;
+        -:  681:				}
+        -:  682:			}
+        -:  683:	
+        -:  684:			
+        2:  685:			in.close();
+        2:  686:			out.close();
+        -:  687:			
+        2:  688:			remove("User.txt");
+        2:  689:			rename("temp.txt","User.txt");
+        2:  690:		}
+        -:  691:			
+        -:  692:		
+        -:  693:		
+        1:  694:		void viewIssuedBooks() //view a book that is issued
+        -:  695:		{
+        1:  696:			system("clear");
+        2:  697:			ifstream in;
+        1:  698:			in.open("Issued_Books.txt");
+        -:  699:	
+        1:  700:			if(in.eof())
+        -:  701:			{
+    #####:  702:				cout<<endl<<"!!!  No book present in the record  !!!"<<endl;	
+        -:  703:			}
+        -:  704:			else
+        -:  705:			{
+        4:  706:				while(!in.eof())
+        -:  707:				{
+        6:  708:					string issue;
+        3:  709:					getline(in,issue);
+        -:  710:	
+        3:  711:					if(issue.length() > 0)
+        -:  712:					{
+        4:  713:						stringstream ss(issue);
+        4:  714:						string eno, bid;
+        2:  715:						ss>>eno>>bid;
+        -:  716:			
+        2:  717:						cout<<endl;
+        2:  718:						cout<<"Enrollment No :-> "<<eno<<endl;
+        2:  719:						cout<<"Book Id :-> "<<bid<<endl;	
+        -:  720:					}
+        -:  721:				}	
+        -:  722:			}
+        -:  723:	
+        1:  724:			in.close();
+        1:  725:		}
+        -:  726:		
+        -:  727:		
+        -:  728:		
+        -:  729:		
+        1:  730:		void insertBook() //inserting book details
+        -:  731:		{
+        1:  732:			system("clear");
+        2:  733:			string bid, name, author, publisher;
+        -:  734:	
+        1:  735:			cout<<endl;
+        -:  736:			//cout<<"Enter Book Id :-> ";
+        -:  737:			//cin>>bid;
+        1:  738:			cout<<"Enter Book Name :-> ";
+        1:  739:			cin>>name;
+        1:  740:			cout<<"Enter Author Name :-> ";
+        1:  741:			cin>>author;
+        1:  742:			cout<<"Enter Publisher :-> ";
+        1:  743:			cin>>publisher;
+        -:  744:			
+        1:  745:			int flag = 0;
+        2:  746:			string key;
+        1:  747:			key=bid;
+        2:  748:			ifstream in;
+        1:  749:			in.open("Book.txt");
+        2:  750:			set<int> s1; // declaring Set s1
+        -:  751:			int max_element;
+       13:  752: 			while(!in.eof())
+        -:  753:			{
+       24:  754:				 	string text;
+       12:  755:					getline(in,text);
+        -:  756:	
+       12:  757:					if(text.length() > 0)
+        -:  758:					{
+        -:  759:						
+       22:  760:						stringstream ss(text);
+       22:  761:						string bid, name, author, publisher;
+        -:  762:						
+       11:  763:						ss>>bid>>name>>author>>publisher;
+        -:  764:				
+       11:  765:						int num=stoi(bid);
+       11:  766:						s1.insert(num);
+        -:  767:						   						
+       11:  768:						cout<<endl;
+        -:  769:						
+        -:  770:					}
+        -:  771:			}
+        -:  772:			
+       1*:  773:			while(!in.eof())
+        -:  774:				{
+    #####:  775:					string book;
+    #####:  776:					getline(in,book);
+        -:  777:	
+    #####:  778:					if(book.length() > 0)
+        -:  779:					{
+    #####:  780:						stringstream ss(book);
+    #####:  781:						string bid, name, author, publisher;
+    #####:  782:						ss>>bid>>name>>author>>publisher;
+        -:  783:			
+    #####:  784:						if(bid == key )
+        -:  785:						{
+    #####:  786:							flag = 1;
+    #####:  787:							cout<<"Book Already Exists";
+    #####:  788:							in.close();
+    #####:  789:							break;
+        -:  790:						}			
+        -:  791:					}
+        -:  792:				}
+        -:  793:				
+        1:  794:				if(flag == 0)
+        -:  795:				{
+        1:  796:					 if (!s1.empty())
+        1:  797:        				max_element = *(s1.rbegin());
+        -:  798:        				//cout<<"sadsadasdsadasd  "<<max_element;
+        1:  799:        				int id=max_element + 1;
+        -:  800:        				
+        1:  801:        				bid= to_string(id);
+        -:  802:					
+        3:  803:					book book(bid, name, author, publisher, true);
+        1:  804:					cout<<"Book Added Successtully..";
+        -:  805:					
+        -:  806:				}		
+        1:  807:		}
+        -:  808:		
+        -:  809:		
+        -:  810:		
+        1:  811:		void searchBook() //search a book
+        -:  812:		{
+        1:  813:			system("clear");
+        1:  814:			int flag = 0;
+        2:  815:			string key;
+        -:  816:			
+        -:  817:			
+        1:  818:			cout<<endl;
+        1:  819:			cout<<"Enter Book Id :-> ";
+        1:  820:			cin>>key;
+        -:  821:			
+        2:  822:			ifstream in;
+        1:  823:			in.open("Book.txt");
+        -:  824:	
+        1:  825:			if(in.eof())
+        -:  826:			{
+    #####:  827:				cout<<endl<<"!!!  No Book present in the record  !!!"<<endl;	
+        -:  828:			}
+        -:  829:			else
+        -:  830:			{
+       12:  831:				while(!in.eof())
+        -:  832:				{
+       12:  833:					string book;
+       12:  834:					getline(in,book);
+        -:  835:	
+       12:  836:					if(book.length() > 0)
+        -:  837:					{
+       12:  838:						stringstream ss(book);
+       12:  839:						string bid, name, author, publisher;
+       12:  840:						ss>>bid>>name>>author>>publisher;
+        -:  841:			
+       12:  842:						if(bid == key)
+        -:  843:						{
+        1:  844:							flag = 1;
+        1:  845:							cout<<endl;
+        1:  846:							cout<<"Book Id :-> "<<bid<<endl;
+        1:  847:							cout<<"Name :-> "<<name<<endl;
+        1:  848:							cout<<"Author :-> "<<author<<endl;
+        1:  849:							cout<<"Publisher :-> "<<publisher<<endl;
+        1:  850:							break;
+        -:  851:						}			
+        -:  852:					}
+        -:  853:				}
+        -:  854:				
+        1:  855:				if(flag == 0)
+        -:  856:				{
+    #####:  857:					cout<<endl;
+    #####:  858:					cout<<"!!!  Book not found  !!!"<<endl<<endl;
+        -:  859:				}	
+        -:  860:			}
+        1:  861:			in.close();
+        1:  862:		}
+        -:  863:		
+        -:  864:};
+        -:  865:
+        -:  866:#endif

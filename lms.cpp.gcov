@@ -1,0 +1,97 @@
+        -:    0:Source:lms.cpp
+        -:    0:Graph:lms.gcno
+        -:    0:Data:lms.gcda
+        -:    0:Runs:1
+        -:    1:#include <iostream>     //including libraries
+        -:    2:#include "lms.h"       //including header file
+        -:    3:
+        -:    4:using namespace std;
+        -:    5:
+        -:    6:
+        -:    7://main method
+        1:    8:int main() 
+        -:    9:{
+        1:   10:	int choice = -1;
+        -:   11:	
+        1:   12:	system("clear");
+        -:   13:	
+        -:   14:    	
+        1:   15:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**"<<endl;
+        1:   16:    	cout<<"\n\t\t\t      **                                                             **"<<endl;
+        1:   17:    	cout<<"\n\t\t\t      **    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    **"<<endl;
+        1:   18:    	cout<<"\n\t\t\t      **    =                    WELCOME TO                     =    **"<<endl;
+        1:   19:    	cout<<"\n\t\t\t      **    =             LIBRARY MANAGEMENT SYSTEM             =    **"<<endl;
+        1:   20:    	cout<<"\n\t\t\t      **    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    **"<<endl;
+        1:   21:    	cout<<"\n\t\t\t      **                                                             **"<<endl;
+        1:   22:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n"<<endl;
+        -:   23:    	
+        1:   24:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**"<<endl;	
+        1:   25:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**"<<endl;
+        1:   26:    	cout<<"\n\t\t\t      **                                                             **"<<endl;
+        1:   27:    	cout<<"\n\t\t\t      **    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    **"<<endl;
+        1:   28:    	cout<<"\n\t\t\t      **    =-                                                 -=    **"<<endl;
+        1:   29:    	cout<<"\n\t\t\t      **    =-               TEAM MEMBERS                      -=    **"<<endl;
+        1:   30:    	cout<<"\n\t\t\t      **    =-              _______________                    -=    **"<<endl;
+        1:   31:    	cout<<"\n\t\t\t      **    =-                                                 -=    **"<<endl;
+        1:   32:    	cout<<"\n\t\t\t      **    =-              1.  Arjit Dubey                    -=    **"<<endl;
+        1:   33:    	cout<<"\n\t\t\t      **    =-              2.  Dinesh Jagtap                  -=    **"<<endl;
+        1:   34:    	cout<<"\n\t\t\t      **    =-              3.  Krishna Vishwakarma            -=    **"<<endl;
+        1:   35:    	cout<<"\n\t\t\t      **    =-              4.  Rahul Malik                    -=    **"<<endl;
+        1:   36:    	cout<<"\n\t\t\t      **    =-              5.  Ummed Singh                    -=    **"<<endl;
+        1:   37:    	cout<<"\n\t\t\t      **    =-                                                 -=    **"<<endl;
+        1:   38:    	cout<<"\n\t\t\t      **    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    **"<<endl;
+        1:   39:    	cout<<"\n\t\t\t      **                                                             **"<<endl;
+        1:   40:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**"<<endl;
+        1:   41:    	cout<<"\n\t\t\t      **-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**-**\n"<<endl;
+        -:   42:	
+        -:   43:	
+        8:   44:	while(choice!=0)
+        -:   45:	{
+        7:   46:		cout<<endl<<"Available Choices :"<<endl<<endl;
+        7:   47:		cout<<"1 - User Signup"<<endl;
+        7:   48:		cout<<"2 - Librarian Signup"<<endl;
+        7:   49:		cout<<"3 - User Login"<<endl;
+        7:   50:		cout<<"4 - Librarian Login"<<endl;
+        7:   51:		cout<<"0 - Exit"<<endl;
+        -:   52:		
+        7:   53:		cout<<endl<<"Enter your choice : -> ";
+        7:   54:		cin>>choice;
+        7:   55:		switch(choice)
+        -:   56:		{
+        1:   57:			case 1:
+        -:   58:			{
+        2:   59:				user user;
+        1:   60:				user.signup();
+        -:   61:			}
+        1:   62:				break;
+        1:   63:			case 2:
+        -:   64:			{
+        2:   65:				librarian lib;
+        1:   66:				lib.signup();
+        -:   67:			}
+        1:   68:				break;
+        2:   69:			case 3:
+        -:   70:				{
+        4:   71:					user user;
+        2:   72:					user.signin();
+        -:   73:				}
+        2:   74:				break;
+        1:   75:			case 4:
+        -:   76:				{
+        2:   77:					librarian lib;
+        1:   78:					lib.signin();
+        -:   79:				}
+        1:   80:				break;
+        2:   81:			default:
+        2:   82:				cout<<endl<<"Warning :-> System Closing..."<<endl;
+        2:   83:				cout<<endl<<".."<<endl;
+        2:   84:				cout<<endl<<"."<<endl;
+        -:   85:				//system("clear");
+        -:   86:				
+        -:   87:		}
+        -:   88:	}
+        1:   89:	cout<<endl<<endl<<"--------------------------------------------------------------";
+        1:   90:	cout<<endl<<"|********** Thank You for Using Library Management **********|"<<endl;
+        1:   91:	cout<<"--------------------------------------------------------------"<<endl<<endl;
+        1:   92:	return 0;
+        -:   93:}//End of main
